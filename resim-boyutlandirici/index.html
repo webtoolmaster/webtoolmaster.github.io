@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı Resim Boyutlandırıcı | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <button id="theme-toggle" class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Üst Reklam Alanı -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="height: 90px;">
+                REKLAM ALANI (728x90)
+            </div>
+
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-black mb-3 dark:text-white">Resim Boyutlandırıcı</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium italic">Resimlerinizi kalite kaybı olmadan istediğiniz ölçülere getirin.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Sol: Yükleme ve Ayarlar -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 space-y-6">
+                    <div id="dropZone" class="border-4 border-dashed border-gray-100 dark:border-gray-700 rounded-3xl p-10 text-center hover:border-blue-500 transition cursor-pointer group">
+                        <input type="file" id="fileInput" accept="image/*" class="hidden">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition">🖼️</div>
+                        <p class="text-gray-500 dark:text-gray-400 font-bold">Resmi buraya sürükleyin veya <span class="text-blue-600">tıklayın</span></p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-black text-gray-400 uppercase mb-2">Genişlik (px)</label>
+                            <input type="number" id="widthInput" class="w-full p-4 bg-gray-50 dark:bg-gray-700 rounded-xl font-bold outline-none border-2 border-transparent focus:border-blue-500 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-gray-400 uppercase mb-2">Yükseklik (px)</label>
+                            <input type="number" id="heightInput" class="w-full p-4 bg-gray-50 dark:bg-gray-700 rounded-xl font-bold outline-none border-2 border-transparent focus:border-blue-500 dark:text-white">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="aspectRatio" checked class="w-5 h-5 rounded accent-blue-600">
+                        <label for="aspectRatio" class="text-sm font-bold text-gray-500">En/Boy Oranını Koru</label>
+                    </div>
+
+                    <button id="resizeBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg transition transform active:scale-95 disabled:opacity-50">
+                        RESMİ BOYUTLANDIR
+                    </button>
+                </div>
+
+                <!-- Sağ: Önizleme -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center min-h-[400px]">
+                    <div id="previewContainer" class="hidden w-full text-center">
+                        <canvas id="canvas" class="max-w-full h-auto rounded-xl shadow-md mx-auto mb-6"></canvas>
+                        <a id="downloadBtn" class="inline-block w-full bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl transition text-center cursor-pointer">
+                            📥 BOYUTLANDIRILMIŞ RESMİ İNDİR
+                        </a>
+                    </div>
+                    <div id="placeholder" class="text-gray-400 italic text-center">
+                        <p>Önizleme burada görünecek...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Reklam Alanı -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mt-12 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                REKLAM ALANI (ESNEK)
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

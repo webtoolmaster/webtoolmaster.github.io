@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredi Hesaplama | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-8 flex items-center justify-between">
+                <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Kredi Hesaplama Aracı</h1>
+                <a href="../index.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">← Geri Dön</a>
+            </div>
+
+            <!-- Üst Reklam Alanı -->
+            <div class="bg-white dark:bg-gray-800 h-24 mb-10 flex items-center justify-center border-dashed border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm italic text-gray-400">
+                Reklam Alanı
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Giriş Paneli -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 h-fit">
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold mb-3 dark:text-gray-300">Kredi Tutarı (TL)</label>
+                        <input type="number" id="amount" value="100000" class="w-full p-4 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 outline-none transition dark:text-white text-lg font-semibold">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold mb-3 dark:text-gray-300">Aylık Faiz Oranı (%)</label>
+                        <input type="number" id="interest" value="3.99" step="0.01" class="w-full p-4 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 outline-none transition dark:text-white text-lg font-semibold">
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-sm font-bold mb-3 dark:text-gray-300">Vade (Ay)</label>
+                        <input type="number" id="term" value="12" class="w-full p-4 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 outline-none transition dark:text-white text-lg font-semibold">
+                    </div>
+                    <button onclick="calculateLoan()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 dark:shadow-none transition-all transform active:scale-95">
+                        Hesapla
+                    </button>
+                </div>
+
+                <!-- Sonuç Özet Paneli -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="bg-blue-600 dark:bg-blue-700 rounded-3xl p-8 text-white shadow-xl flex flex-col justify-between h-full">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div>
+                                <p class="text-blue-100 text-sm font-bold uppercase tracking-widest opacity-80">Aylık Taksit</p>
+                                <h2 class="text-5xl font-black mt-2 leading-none" id="monthlyPaymentDisplay">0.00 TL</h2>
+                            </div>
+                            <div>
+                                <p class="text-blue-100 text-sm font-bold uppercase tracking-widest opacity-80">Toplam Geri Ödeme</p>
+                                <h2 class="text-5xl font-black mt-2 leading-none" id="totalPaymentDisplay">0.00 TL</h2>
+                            </div>
+                        </div>
+                        <div class="mt-10 pt-8 border-t border-blue-400/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <p class="text-blue-50 text-lg">Ödenecek Toplam Faiz: <span class="font-black underline decoration-blue-300" id="totalInterestDisplay">0.00 TL</span></p>
+                            <span class="bg-blue-500 text-xs px-3 py-1 rounded-full font-bold">Vergiler Dahildir</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ödeme Planı Tablosu -->
+            <div class="mt-12 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
+                    <h3 class="font-black text-xl tracking-tight">Detaylı Ödeme Planı</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-gray-700/50 text-gray-400 dark:text-gray-400 text-xs uppercase font-black tracking-widest">
+                                <th class="p-5">No</th>
+                                <th class="p-5">Taksit Tutarı</th>
+                                <th class="p-5">Anapara</th>
+                                <th class="p-5">Faiz+Vergi</th>
+                                <th class="p-5">Kalan Anapara</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTableBody" class="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700">
+                            <!-- JS ile dolacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

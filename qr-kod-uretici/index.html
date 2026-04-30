@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı QR Kod Üretici | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Kod Kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Üst Reklam Alanı (Yatay) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 90px;">
+                SPONSORLU BAĞLANTI (728x90)
+            </div>
+
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black mb-3 dark:text-white">QR Kod Üretici</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium italic">Link, metin veya iletişim bilgileri için anında QR kod oluşturun.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <!-- Giriş Alanı -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700">
+                    <div class="mb-6">
+                        <label class="block text-sm font-black uppercase tracking-widest text-gray-400 mb-2">QR İçeriği (Link veya Metin)</label>
+                        <textarea id="qrInput" placeholder="https://youtube.com/@kanalin" 
+                                  class="w-full h-32 p-5 bg-gray-50 dark:bg-gray-700 border-2 border-transparent focus:border-blue-500 rounded-2xl outline-none dark:text-white transition resize-none"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2">Boyut</label>
+                            <select id="qrSize" class="w-full p-3 bg-gray-50 dark:bg-gray-700 rounded-xl font-bold outline-none">
+                                <option value="128">128x128</option>
+                                <option value="256" selected>256x256</option>
+                                <option value="512">512x512</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2">Renk</label>
+                            <input type="color" id="qrColor" value="#000000" class="w-full h-12 bg-transparent cursor-pointer">
+                        </div>
+                    </div>
+
+                    <button onclick="generateQR()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg transition transform active:scale-95">
+                        QR KODU OLUŞTUR
+                    </button>
+                </div>
+
+                <!-- Önizleme ve İndirme Bölümü -->
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center min-h-[400px]">
+                        <div id="qrcode" class="p-4 bg-white rounded-xl shadow-inner mb-6">
+                            <!-- QR Kod Buraya Gelecek -->
+                        </div>
+                        
+                        <div id="downloadBtnContainer" class="hidden w-full">
+                            <button onclick="downloadQR()" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-3 rounded-xl transition flex items-center justify-center gap-2">
+                                📥 QR Kodu İndir (PNG)
+                            </button>
+                        </div>
+                        <p id="qrPlaceholder" class="text-gray-400 italic font-medium">Lütfen içerik girip butona basın...</p>
+                    </div>
+
+                    <!-- Sağ Sütun Alt Reklam Alanı (Kare/Esnek) -->
+                    <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-3xl flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 200px;">
+                        REKLAM ALANI
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sayfa Sonu Geniş Reklam Alanı -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-3xl mt-12 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                REKLAM ALANI (ESNEK)
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

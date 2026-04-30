@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güvenli Şifre Oluşturucu | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-2xl mx-auto">
+            
+            <!-- Üst Reklam Alanı (728x90) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 90px;">
+                Sponsorlu Bağlantı
+            </div>
+
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black mb-4 dark:text-white">Güvenli Şifre Oluşturucu</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium italic">Kırılması imkansız, yüksek güvenlikli şifreler oluşturun.</p>
+            </div>
+
+            <!-- Şifre Görüntüleme Alanı -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 mb-8">
+                <div class="relative group">
+                    <input type="text" id="passwordDisplay" readonly 
+                           class="w-full p-6 pr-16 bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-2xl font-mono text-2xl text-blue-600 dark:text-blue-400 text-center outline-none transition shadow-inner" placeholder="Şifre Burada Görünecek">
+                    <button onclick="copyToClipboard()" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white dark:bg-gray-600 rounded-xl shadow-md hover:bg-blue-50 dark:hover:bg-gray-500 transition-all active:scale-90">
+                        📋
+                    </button>
+                </div>
+                <!-- Güvenlik Çubuğu -->
+                <div class="mt-4 h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div id="strengthBar" class="h-full w-0 bg-red-500 transition-all duration-500"></div>
+                </div>
+                <p id="strengthText" class="mt-2 text-xs font-bold text-center uppercase tracking-widest text-gray-400">Zayıf</p>
+            </div>
+
+            <!-- Ayarlar -->
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                <div class="space-y-6">
+                    <!-- Uzunluk -->
+                    <div>
+                        <div class="flex justify-between mb-4">
+                            <label class="text-sm font-black uppercase tracking-widest text-gray-500">Şifre Uzunluğu</label>
+                            <span id="lengthValue" class="text-blue-600 dark:text-blue-400 font-black text-xl">16</span>
+                        </div>
+                        <input type="range" id="passwordLength" min="6" max="50" value="16" 
+                               class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                    </div>
+
+                    <!-- Seçenekler -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition">
+                            <input type="checkbox" id="includeUppercase" checked class="w-5 h-5 rounded text-blue-600">
+                            <span class="ml-3 font-bold">Büyük Harf (A-Z)</span>
+                        </label>
+                        <label class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition">
+                            <input type="checkbox" id="includeNumbers" checked class="w-5 h-5 rounded text-blue-600">
+                            <span class="ml-3 font-bold">Rakamlar (0-9)</span>
+                        </label>
+                        <label class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition">
+                            <input type="checkbox" id="includeSymbols" checked class="w-5 h-5 rounded text-blue-600">
+                            <span class="ml-3 font-bold">Semboller (!@#$)</span>
+                        </label>
+                        <button onclick="generatePassword()" class="bg-blue-600 hover:bg-blue-700 text-white font-black p-4 rounded-2xl shadow-lg shadow-blue-200 dark:shadow-none transition transform active:scale-95">
+                            YENİ ŞİFRE ÜRET
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Reklam Alanı (Esnek) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mt-8 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                REKLAM ALANI
+            </div>
+
+            <!-- Uyarı -->
+            <div id="copyToast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-8 py-3 rounded-full text-sm font-bold opacity-0 transition-opacity pointer-events-none z-50">
+                Şifre Panoya Kopyalandı!
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

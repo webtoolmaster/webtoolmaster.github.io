@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatlayıcı ve Doğrulayıcı | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        .json-error { border-color: #ef4444 !important; }
+        #jsonInput::-webkit-scrollbar { width: 8px; }
+        #jsonInput::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <button id="theme-toggle" class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Üst Reklam Alanı -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="height: 90px;">
+                REKLAM ALANI (728x90)
+            </div>
+
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-black mb-3 dark:text-white">JSON Formatlayıcı</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium italic">JSON verilerinizi güzelleştirin, doğrulayın ve hatasız hale getirin.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6">
+                <!-- İşlem Alanı -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700">
+                    <div class="flex flex-wrap gap-3 mb-4">
+                        <button onclick="processJSON('beautify')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-bold transition transform active:scale-95 shadow-lg shadow-blue-200 dark:shadow-none">Formatla (Beautify)</button>
+                        <button onclick="processJSON('minify')" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2.5 rounded-xl font-bold transition transform active:scale-95">Küçült (Minify)</button>
+                        <button onclick="copyToClipboard()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-xl font-bold transition transform active:scale-95">Kopyala</button>
+                        <button onclick="clearAll()" class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-6 py-2.5 rounded-xl font-bold transition hover:bg-red-100">Temizle</button>
+                    </div>
+
+                    <div class="relative">
+                        <textarea id="jsonInput" placeholder='{"id": 1, "name": "WebToolMaster", "status": "active"}' 
+                                  class="w-full h-[500px] p-6 bg-gray-50 dark:bg-gray-700 border-2 border-gray-100 dark:border-gray-600 rounded-2xl font-mono text-sm outline-none focus:border-blue-500 transition dark:text-gray-200 resize-none"></textarea>
+                        
+                        <!-- Durum Bildirimi -->
+                        <div id="statusLabel" class="absolute bottom-4 right-6 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Reklam Alanı -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mt-12 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 200px;">
+                REKLAM ALANI (ESNEK)
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

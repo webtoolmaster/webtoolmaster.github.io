@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelime ve Karakter Sayacı | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Üst Reklam Alanı (728x90) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 90px;">
+                REKLAM ALANI (728x90)
+            </div>
+
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-black mb-3 dark:text-white">Kelime Sayacı</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium">Metninizi analiz edin, okuma süresini ve yoğunluğu görün.</p>
+            </div>
+
+            <!-- İstatistik Paneli -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                    <span class="block text-3xl font-black text-blue-600 dark:text-blue-400" id="wordCount">0</span>
+                    <span class="text-xs font-bold uppercase text-gray-400">Kelime</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                    <span class="block text-3xl font-black text-blue-600 dark:text-blue-400" id="charCount">0</span>
+                    <span class="text-xs font-bold uppercase text-gray-400">Karakter</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                    <span class="block text-3xl font-black text-green-500" id="readingTime">0 dk</span>
+                    <span class="text-xs font-bold uppercase text-gray-400">Okuma Süresi</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                    <span class="block text-3xl font-black text-purple-500" id="sentenceCount">0</span>
+                    <span class="text-xs font-bold uppercase text-gray-400">Cümle</span>
+                </div>
+            </div>
+
+            <!-- Metin Giriş Alanı -->
+            <div class="relative mb-8">
+                <textarea id="textInput" placeholder="Metninizi buraya yapıştırın veya yazın..." 
+                          class="w-full h-80 p-8 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-3xl shadow-xl focus:ring-4 focus:ring-blue-500/10 outline-none dark:text-white text-lg transition resize-none"></textarea>
+                <button onclick="clearText()" class="absolute bottom-6 right-6 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-bold rounded-xl hover:bg-red-100 transition">
+                    Temizle
+                </button>
+            </div>
+
+            <!-- Kelime Yoğunluğu Alanı -->
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 mb-8">
+                <h3 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">En Sık Geçen Kelimeler</h3>
+                <div id="keywordDensity" class="flex flex-wrap gap-2 text-sm">
+                    <span class="text-gray-400 italic">Henüz yeterli veri yok...</span>
+                </div>
+            </div>
+
+            <!-- Alt Reklam Alanı (Esnek / Yatay) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                REKLAM ALANI
+            </div>
+            
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

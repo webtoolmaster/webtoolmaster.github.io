@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlı Kripto Çevirici | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-3xl mx-auto">
+            
+            <!-- Üst Reklam Alanı (728x90) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 90px;">
+                REKLAM ALANI (728x90)
+            </div>
+
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black mb-4 dark:text-white">Canlı Kripto Çevirici</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium">Binance API ile 25+ Kripto Parayı Anlık Çevirin</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700">
+                <div class="space-y-6">
+                    <!-- Miktar -->
+                    <div>
+                        <label class="block text-xs font-black mb-2 ml-1 text-blue-600 dark:text-blue-400 uppercase tracking-widest">Çevrilecek Miktar</label>
+                        <input type="number" id="cryptoAmount" value="1" step="any"
+                               class="w-full p-5 bg-gray-50 dark:bg-gray-700 border-none rounded-2xl focus:ring-4 focus:ring-blue-500/20 outline-none dark:text-white text-3xl font-black transition">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Kaynak Kripto -->
+                        <div>
+                            <label class="block text-xs font-black mb-2 ml-1 text-gray-400 uppercase tracking-widest">Kripto Para</label>
+                            <select id="fromCurrency" class="w-full p-4 bg-gray-100 dark:bg-gray-700 border-none rounded-2xl font-bold dark:text-white outline-none cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                <optgroup label="Popüler">
+                                    <option value="BTCUSDT">Bitcoin (BTC)</option>
+                                    <option value="ETHUSDT">Ethereum (ETH)</option>
+                                    <option value="XRPUSDT">Ripple (XRP)</option>
+                                    <option value="TRXUSDT">Tron (TRX)</option>
+                                    <option value="SOLUSDT">Solana (SOL)</option>
+                                </optgroup>
+                                <optgroup label="Altcoinler">
+                                    <option value="BNBUSDT">Binance Coin (BNB)</option>
+                                    <option value="ADAUSDT">Cardano (ADA)</option>
+                                    <option value="AVAXUSDT">Avalanche (AVAX)</option>
+                                    <option value="DOTUSDT">Polkadot (DOT)</option>
+                                    <option value="DOGEUSDT">Dogecoin (DOGE)</option>
+                                    <option value="SHIBUSDT">Shiba Inu (SHIB)</option>
+                                    <option value="MATICUSDT">Polygon (MATIC)</option>
+                                    <option value="LTCUSDT">Litecoin (LTC)</option>
+                                    <option value="LINKUSDT">Chainlink (LINK)</option>
+                                    <option value="NEARUSDT">Near Protocol (NEAR)</option>
+                                    <option value="ATOMUSDT">Cosmos (ATOM)</option>
+                                    <option value="UNIUSDT">Uniswap (UNI)</option>
+                                    <option value="ETCUSDT">Ethereum Classic (ETC)</option>
+                                    <option value="XLMUSDT">Stellar (XLM)</option>
+                                    <option value="ALGOUSDT">Algorand (ALGO)</option>
+                                    <option value="PEPEUSDT">Pepe (PEPE)</option>
+                                    <option value="APTUSDT">Aptos (APT)</option>
+                                    <option value="TIAUSDT">Celestia (TIA)</option>
+                                    <option value="INJUSDT">Injective (INJ)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- Hedef Para -->
+                        <div>
+                            <label class="block text-xs font-black mb-2 ml-1 text-gray-400 uppercase tracking-widest">Hedef Birim</label>
+                            <select id="toCurrency" class="w-full p-4 bg-gray-100 dark:bg-gray-700 border-none rounded-2xl font-bold dark:text-white outline-none cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                <option value="USD">Amerikan Doları ($)</option>
+                                <option value="TRY">Türk Lirası (₺)</option>
+                                <option value="EUR">Euro (€)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sonuç Panel -->
+                    <div class="bg-blue-600 dark:bg-blue-700 p-8 rounded-3xl text-white shadow-lg transform transition active:scale-95">
+                        <p id="conversionRate" class="text-blue-200 text-xs font-bold uppercase mb-2 tracking-tighter">Birim Fiyat: Yükleniyor...</p>
+                        <h2 id="resultDisplay" class="text-4xl md:text-5xl font-black truncate">---</h2>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-gray-400 uppercase">
+                    <span>⚡ Binance Live Data</span>
+                    <span id="lastUpdate">Son Güncelleme: --:--:--</span>
+                </div>
+            </div>
+
+            <!-- Alt Reklam Alanı (Esnek/Native) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mt-8 flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                REKLAM ALANI (ESNEK / NATIVE)
+            </div>
+
+            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
+                <strong>Bilgi:</strong> Çevrim işlemleri Binance Spot piyasasındaki <strong>USDT</strong> pariteleri ve TCMB yaklaşık döviz kurları temel alınarak hesaplanmaktadır.
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

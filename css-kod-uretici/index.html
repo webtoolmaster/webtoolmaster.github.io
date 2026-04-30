@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Kod Üretici | WebToolMaster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
+                WebTool<span class="text-gray-900 dark:text-white">Master</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    <span id="theme-toggle-dark-icon" class="hidden text-xl">🌙</span>
+                    <span id="theme-toggle-light-icon" class="hidden text-xl">☀️</span>
+                </button>
+                <a href="../index.html" class="hidden md:block font-medium hover:text-blue-600 dark:hover:text-blue-400 transition">Ana Sayfa</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Üst Reklam Alanı (Yatay - 728x90) -->
+            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 90px;">
+                REKLAM ALANI (728x90)
+            </div>
+
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black mb-3 dark:text-white">CSS Kod Üretici</h1>
+                <p class="text-gray-500 dark:text-gray-400 font-medium">Görsel olarak tasarlayın, CSS kodunu anında kopyalayın.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Kontrol Paneli -->
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 space-y-8">
+                        
+                        <!-- Shadow Ayarları -->
+                        <div>
+                            <h3 class="text-sm font-black uppercase text-blue-600 mb-4 tracking-widest">Gölge (Box Shadow)</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-bold text-gray-400 flex justify-between">Yatay Uzaklık <span id="vH">10px</span></label>
+                                    <input type="range" id="hShadow" min="-50" max="50" value="10" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-gray-400 flex justify-between">Dikey Uzaklık <span id="vV">10px</span></label>
+                                    <input type="range" id="vShadow" min="-50" max="50" value="10" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-gray-400 flex justify-between">Bulanıklık <span id="vB">15px</span></label>
+                                    <input type="range" id="blurShadow" min="0" max="100" value="15" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Radius Ayarları -->
+                        <div>
+                            <h3 class="text-sm font-black uppercase text-green-500 mb-4 tracking-widest">Kenar Yuvarlama (Border Radius)</h3>
+                            <div>
+                                <label class="text-xs font-bold text-gray-400 flex justify-between">Yuvarlama Değeri <span id="vR">20px</span></label>
+                                <input type="range" id="borderRadius" min="0" max="150" value="20" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+                            </div>
+                        </div>
+
+                        <!-- Renk Ayarları -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-bold text-gray-400 block mb-2">Kutu Rengi</label>
+                                <input type="color" id="boxColor" value="#3b82f6" class="w-full h-12 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-400 block mb-2">Gölge Rengi</label>
+                                <input type="color" id="shadowColor" value="#000000" class="w-full h-12 bg-transparent cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sol Alt Reklam Alanı (Yatay/Küçük) -->
+                    <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 100px;">
+                        REKLAM ALANI
+                    </div>
+                </div>
+
+                <!-- Önizleme ve Kod -->
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 flex items-center justify-center min-h-[300px]">
+                        <div id="previewBox" class="w-48 h-48 transition-all duration-150"></div>
+                    </div>
+
+                    <!-- Kod Alanı Reklam Yerleşimi (Hemen Üstünde) -->
+                    <div class="bg-gray-900 p-6 rounded-3xl relative group">
+                        <h4 class="text-blue-400 text-xs font-black uppercase mb-3 tracking-widest">Oluşturulan Kod</h4>
+                        <code id="cssOutput" class="text-gray-300 font-mono text-sm block leading-relaxed">
+                            /* Kod burada görünecek */
+                        </code>
+                        <button onclick="copyCSS()" class="absolute top-6 right-6 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl text-xs font-bold transition active:scale-90">
+                            Kopyala
+                        </button>
+                    </div>
+
+                    <!-- Sağ Alt Reklam Alanı (Kare veya Esnek) -->
+                    <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-3xl flex items-center justify-center text-gray-400 font-bold text-[10px] uppercase tracking-[0.2em] border-2 border-dashed border-gray-300 dark:border-gray-700" style="min-height: 250px;">
+                        REKLAM ALANI (ESNEK)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
